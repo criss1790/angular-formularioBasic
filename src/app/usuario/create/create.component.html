@@ -1,0 +1,69 @@
+<h1>Formulario</h1>
+<hr>
+
+<div class="row">
+    <div class="col">
+
+        <app-list [usuarios]="usuarios">
+
+
+        </app-list>
+
+
+    </div>
+    <div class="col">
+
+        <h3>Registrar</h3>
+        <hr>
+
+        <form (ngSubmit)=agregar() #formulario="ngForm">
+            <script>
+                var form = document.querySelector("form");
+                var log = document.querySelector("#log");
+
+                form.addEventListener("submit", function(event) {
+                    var data = new FormData(form);
+                    var output = "";
+                    for (const entry of data) {
+                        output = output + entry[0] + "=" + entry[1] + "\r";
+                    };
+                    log.innerText = output;
+                    event.preventDefault();
+                }, false);
+            </script>
+
+
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label" id="tipo">Tipo documento</label>
+                <div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="T.I" [(ngModel)]="usuario.tipoDocumento" name="documento" id="radionit" required>
+                        <label class="form-check-label" for="radionit">
+                          T.I
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="C.C." [(ngModel)]="usuario.tipoDocumento" name="documento" id="radiocc" required>
+                        <label class="form-check-label" for="radiocc">
+                          C.C
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+            <input type="number" ngModel placeholder="Numero de Documento" name="numero" [(ngModel)]="usuario.numeroDocumento" required maxlength="15">
+
+            <input type="text" placeholder="Nombres" name="nombre" [(ngModel)]="usuario.nombres" pattern="^[A-Za-z ]+$" maxlength="30" required>
+
+            <input type="text" placeholder="Apellidos" name="apellido" [(ngModel)]="usuario.apellidos" pattern="^[A-Za-z ]+$" maxlength="30" required>
+            <input type="email" placeholder="Correo" name="emails" [(ngModel)]="usuario.email" pattern="" required>
+            <input type="number" placeholder="Telefono" name="telefonos" [(ngModel)]="usuario.telefono" maxlength="14" required>
+            <input type="password" placeholder="Contraseña" name="con" [(ngModel)]="usuario.password" minlength="10" maxlength="20" required>
+
+            <button class="btn btn-primary" type="submit" [disabled]="formulario.invalid"> 
+                Agregar
+            </button>
+        </form>
+    </div>
+
+</div>
